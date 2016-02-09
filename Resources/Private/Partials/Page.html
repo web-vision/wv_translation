@@ -1,0 +1,26 @@
+<tr class="{f:if(condition: '{page.record.languageOverlay -> f:count()} == {languages -> f:count()}', then: 'success')}">
+    <td>
+        <f:if condition="{page.record.languageOverlay -> f:count()} == {languages -> f:count()}">
+            <f:else>
+                <f:form.checkbox value="{page.record.uid}" checked="true" />
+            </f:else>
+        </f:if>
+    </td>
+    <td>
+        {page.record.title}
+    </td>
+    <td>
+        <div class="btn-group" role="group">
+            <f:for each="{page.record.languageOverlay}" as="languageOverlay">
+                <button type="button" class="btn btn-default" title="{languageOverlay.title}" disabled="disabled">
+                    <f:render partial="LanguageFlag" arguments="{languages: languages, languageUid: languageOverlay.sys_language_uid}"/>
+                </button>
+            </f:for>
+        </div>
+    </td>
+</tr>
+<f:if condition="{page.childNodes}">
+    <f:for each="{page.childNodes}" as="subPage">
+        <f:render partial="Page" arguments="{page: subPage, languages: languages}"/>
+    </f:for>
+</f:if>

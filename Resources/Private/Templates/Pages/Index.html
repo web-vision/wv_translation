@@ -1,0 +1,23 @@
+<f:layout name="Index" />
+<f:section name="Content">
+    <h1>{f:translate(key: 'headline.index')}</h1>
+    <p>{f:translate(key: 'description.index')}</p>
+
+    <f:form action="translatePages">
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th class="first">{f:translate(key: 'selected')}</th>
+                    <th>{f:translate(key: 'page.title')}</th>
+                    <th>{f:translate(key: 'localized')}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <f:render partial="Page" arguments="{page: settings.currentPage, languages: languages}"/>
+                <f:for each="{pages}" as="page">
+                    <f:render partial="Page" arguments="{page: page, languages: languages}"/>
+                </f:for>
+            </tbody>
+        </table>
+    </f:form>
+</f:section>
