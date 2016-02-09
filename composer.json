@@ -1,0 +1,12 @@
+{
+    "name": "web-vision/wv_translation",
+    "type": "typo3-cms-extension",
+    "description": "Provide further functionality for translations inside TYPO3.",
+    "homepage": "http://web-vision.de",
+    "license": ["GPL-3.0+"],
+    "autoload": {
+        "psr-4": {
+            "WebVision\\WvTranslation\\": "Classes"
+        }
+    }
+}
