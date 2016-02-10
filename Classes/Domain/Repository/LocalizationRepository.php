@@ -118,7 +118,7 @@ class LocalizationRepository
             '1=1 ' . $this->getAdditionalWhereClause($table)
         );
 
-        // Only use languages, where current user has access to.
+        // Only use languages where current user has access to.
         return array_filter($languages, function (array $language) {
             return $GLOBALS['BE_USER']->checkLanguageAccess($language['uid']);
         });

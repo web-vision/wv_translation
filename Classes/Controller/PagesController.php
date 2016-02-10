@@ -93,7 +93,7 @@ class PagesController extends ActionController
      * Deliver an index of pages, with there current localization stage.
      *
      * The list is recursive and root element can be set with get var "id".
-     * Where 0 is default.
+     * Default is 0.
      *
      * @return void
      */

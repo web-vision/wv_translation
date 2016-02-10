@@ -27,8 +27,8 @@
                         Pages that currently will be translated are highlighted in blue.
                     </p>
                     <p class="bg-warning">
-                        <b>NOTE:</b> Only a level of 5 will be fetched, to prevent loading errors.<br>
-                        You have to select a deeper level on your own to see current state and translate further pages.
+                        <b>NOTE:</b> Only 5 sub levels will be fetched, to prevent loading errors.<br>
+                        You have to select a deeper level on your own to see the current state and translate further pages.
                     </p>
                 ]]></source>
             </trans-unit>
@@ -36,7 +36,7 @@
                 <source>Languages for translation of selected pages</source>
             </trans-unit>
             <trans-unit id="description.index.languageSelection">
-                <source><![CDATA[<p>Selected pages will only be translated to selected languages. If you don't need a specific languages, just deselect it.</p>]]></source>
+                <source><![CDATA[<p>Selected pages will only be translated to selected languages. If you don't need a specific language, just deselect it.</p>]]></source>
             </trans-unit>
 
             <trans-unit id="page.title">

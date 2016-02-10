@@ -39,8 +39,8 @@
                 <target><![CDATA[
                     <p>Dieses Modul liefert eine Übersicht aller Seiten und deren aktueller Zustand der Übersetzungen. Seiten können rekursiv in alle Sprachen übersetzt werden.</p>
                     <p>
-                        Seiten, welche bereits in alle verfügbaren sprachen übersetzt sind, werden Grün hervorgehoben und können nicht erneut übersetzt werden.<br>
-                        Seiten welche aktuell zur Übersetzung ausgewählt sind, werden Blau hervorgehoben.
+                        Seiten, welche bereits in alle verfügbaren Sprachen übersetzt sind, werden Grün hervorgehoben und können nicht erneut übersetzt werden.<br>
+                        Seiten welche aktuell zur Übersetzung ausgewählt sind werden Blau hervorgehoben.
                     </p>
                     <p class="bg-warning">
                         <b>ACHTUNG:</b> Es werden nur 5 Ebenen dargestellt, um Probleme mit der Performance zu vermeiden.<br>
@@ -71,7 +71,7 @@
             </trans-unit>
             <trans-unit id="actions.translate">
                 <source>Translate selected pages</source>
-                <target>Ausgeählte Seiten übersetzen</target>
+                <target>Ausgewählte Seiten übersetzen</target>
             </trans-unit>
          </body>
      </file>

@@ -18,7 +18,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
- * Will make the given string fully upper case.
+ * Will make the given string fully uppercase.
  *
  * Will work on wrapped content / inline. So no further arguments are
  * available.

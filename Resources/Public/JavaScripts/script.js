@@ -9,6 +9,7 @@
 ;
 (function(window, document, $) {
     $(function() {
+        // Highlight selected rows
         $('input[type="checkbox"]').click(function() {
             var $this = $(this),
                 $tr = $this.closest('tr');

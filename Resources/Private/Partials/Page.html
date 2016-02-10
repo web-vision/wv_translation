@@ -25,7 +25,7 @@
         </label>
     </td>
     <td>
-        <div class="btn-group localizedState" role="group">
+        <div class="btn-group localized-state" role="group">
             <f:for each="{page.row.languageOverlay}" as="languageOverlay">
                 <button type="button" class="btn btn-default" title="{languageOverlay.title}" disabled="disabled">
                     <f:render partial="LanguageFlag" arguments="{languages: languages, languageUid: languageOverlay.sys_language_uid}"/>

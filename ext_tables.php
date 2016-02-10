@@ -21,11 +21,11 @@ call_user_func(
             'translation',
             '',
             array(
-                'Pages' => 'index,translatePages',
+                'Pages' => 'index, translatePages',
             ),
             array(
-                'access' => 'user,group',
-                'workspaces' => 'online,custom',
+                'access' => 'user, group',
+                'workspaces' => 'online, custom',
                 'icon' => 'EXT:' . $extKey . '/Resources/Public/Images/Icons/Module.svg',
                 'labels' => 'LLL:EXT:' . $extKey . '/Resources/Private/Language/locallang.xlf'
             )

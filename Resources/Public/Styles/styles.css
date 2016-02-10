@@ -1,29 +1,11 @@
-/* line 1, styles.scss */
-label {
-  font-weight: inherit;
-}
+label { font-weight: inherit; }
 
-/* line 2, styles.scss */
-table label {
-  width: 100%;
-}
+table label { width: 100%; }
 
-/* line 4, styles.scss */
-.localizedState button.btn[disabled] {
-  cursor: help;
-}
+.localized-state .btn[disabled] { cursor: help; }
 
-/* line 6, styles.scss */
-th.first {
-  width: 50px;
-}
+th.first { width: 50px; }
 
-/* line 7, styles.scss */
-td.first {
-  text-align: center;
-}
+td.first { text-align: center; }
 
-/* line 9, styles.scss */
-span.checkbox-group {
-  margin-right: 10px;
-}
+.checkbox-group { margin-right: 10px; }
