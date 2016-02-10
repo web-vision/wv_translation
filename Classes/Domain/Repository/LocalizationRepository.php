@@ -27,6 +27,9 @@ use TYPO3\CMS\Frontend\Page\PageRepository;
  */
 class LocalizationRepository
 {
+    /**
+     * @var PageRepository
+     */
     protected $pageRepository;
 
     /**
@@ -41,11 +44,13 @@ class LocalizationRepository
     }
 
     /**
-     * Initialize the current page, from page tree, and persist to settings.
+     * Returns page by here uid.
+     *
+     * Also will handle page 0.
      *
      * @param int $pageUid
      *
-     * @return PagetreeNode
+     * @return array
      */
     public function findPageByUid($pageUid)
     {
@@ -59,13 +64,12 @@ class LocalizationRepository
             'HTML' => $pageNode->getSpriteIconCode(),
         ];
 
-        if ($pageUid !== 0) {
-            $pageNode = Pagetree\Commands::getNode($pageUid);
+        if ($pageUid > 0) {
             $tree = GeneralUtility::makeInstance(PageTreeView::class);
             $page = [
                 'row' => $tree->getRecord($pageUid),
                 'depthData' => '',
-                'HTML' => $pageNode->getSpriteIconCode(),
+                'HTML' => Pagetree\Commands::getNode($pageUid)->getSpriteIconCode(),
             ];
         }
 
@@ -77,18 +81,20 @@ class LocalizationRepository
     /**
      * Will find all pages, that are sub pages of the provided page.
      *
-     * @param array $parentPage Parent node containing childs.
+     * @param int $parentPageUid Uid of parent page to fetch childs from.
      * @param int $depth Number of levels to go down.
      *
      * @return array
      */
-    public function findPagesByParentPage(array $parentPage, $depth = 5)
+    public function findPagesByParentPage($parentPageUid, $depth = 5)
     {
         $tree = GeneralUtility::makeInstance(PageTreeView::class);
         $tree->init();
-        $tree->getTree($parentPage['row']['uid'], $depth);
+        $tree->getTree($parentPageUid, $depth);
         $pages = $tree->tree;
 
+        // Use reference, as we will update the existing pages and can save
+        // memory.
         foreach ($pages as &$page) {
             $this->addLanguageOverlayToPage($page);
         }
@@ -98,6 +104,8 @@ class LocalizationRepository
 
     /**
      * Will find all active system languages.
+     *
+     * Respects current be user.
      *
      * @return array
      */
@@ -119,7 +127,8 @@ class LocalizationRepository
     /**
      * Will add the language overlay information to the given page.
      *
-     * The information will be available under record property and 'languageOverlay'.
+     * The information will be available under 'row.languageOverlay'.
+     * Respects current be user.
      *
      * @param array $page
      *

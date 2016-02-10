@@ -34,7 +34,9 @@ class PagesController extends ActionController
     const ARRAY_KEY_CURRENT_PAGE = 'currentPageUid';
 
     /**
-     * Backend Template Container
+     * Use backend template container as view.
+     *
+     * This way we already have common design.
      *
      * @var string
      */
@@ -55,7 +57,7 @@ class PagesController extends ActionController
     /**
      * Initialize all actions.
      *
-     * Fetch current page uid.
+     * Used to fetch current page uid from page tree.
      *
      * @return void
      */
@@ -90,8 +92,8 @@ class PagesController extends ActionController
     /**
      * Deliver an index of pages, with there current localization stage.
      *
-     * The list can is recursive and parent can be set with get var "id". 0 is
-     * default.
+     * The list is recursive and root element can be set with get var "id".
+     * Where 0 is default.
      *
      * @return void
      */
@@ -100,7 +102,7 @@ class PagesController extends ActionController
         $currentPage = $this->repository->findPageByUid($this->settings['currentPageUid']);
         $this->view->assignMultiple([
             'currentPage' => $currentPage,
-            'pages' => $this->repository->findPagesByParentPage($currentPage),
+            'pages' => $this->repository->findPagesByParentPage($currentPage['row']['uid']),
             'languages' => $this->repository->findAllSystemLanguages(),
         ]);
     }
