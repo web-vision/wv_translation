@@ -14,6 +14,7 @@ namespace WebVision\WvTranslation\Controller;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -56,6 +57,24 @@ class PagesController extends ActionController
         if ($currentPageUid !== null) {
             $this->settings['currentPageUid'] = (int) $currentPageUid;
         }
+    }
+
+    /**
+     * Add further information to view.
+     *
+     * @param \TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view
+     *
+     * @return void
+     */
+    protected function initializeView(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view)
+    {
+        // Show path to current page in doc header.
+        $view->getModuleTemplate()->getDocHeaderComponent()->setMetaInformation(
+            $pageRecord = BackendUtility::readPageAccess(
+                $this->settings['currentPageUid'],
+                $GLOBALS['BE_USER']->getPagePermsClause(1)
+            )
+        );
     }
 
     /**
