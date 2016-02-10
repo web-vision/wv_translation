@@ -69,13 +69,17 @@ class LocalizationRepository
     /**
      * Will find all pages, that are sub pages of the provided page.
      *
-     * @param PagetreeNode $parentPage
+     * @param PagetreeNode $parentPage Parent node containing childs.
+     * @param int $nodeLimit Number of notes to fetch.
      *
      * @return TYPO3\CMS\Backend\Tree\Pagetree\PagetreeNodeCollection
      */
-    public function findPagesByParentPage(PagetreeNode $parentPage)
+    public function findPagesByParentPage(PagetreeNode $parentPage, $nodeLimit = 300)
     {
-        $tree = GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Tree\Pagetree\DataProvider::class);
+        $tree = GeneralUtility::makeInstance(
+            \TYPO3\CMS\Backend\Tree\Pagetree\DataProvider::class,
+            $nodeLimit
+        );
         $pages = $tree->getNodes($parentPage);
         foreach ($pages as $page) {
             $this->addLanguageOverlayToPageAndSubpages($page);

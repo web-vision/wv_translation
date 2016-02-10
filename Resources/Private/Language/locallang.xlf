@@ -27,6 +27,10 @@
                         Pages that are already translated to all possible languages are highlighted in green and won't be able to be translated again.<br>
                         Pages that currently will be translated are highlighted in blue.
                     </p>
+                    <p class="bg-warning">
+                        <b>NOTE:</b> Only 300 pages will be fetched, to prevent loading errors.<br>
+                        You have to select a deeper level on your own to see current state and translate further pages.
+                    </p>
                 ]]></source>
             </trans-unit>
             <trans-unit id="headline.index.languageSelection">
