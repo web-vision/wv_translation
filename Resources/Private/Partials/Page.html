@@ -1,31 +1,32 @@
-<tr class="{f:if(condition: '{page.record.languageOverlay -> f:count()} == {languages -> f:count()}', then: 'success', else: 'info')}">
-    <td>
-        <f:if condition="{page.record.languageOverlay -> f:count()} == {languages -> f:count()}">
+<tr class="{f:if(condition: '{page.row.languageOverlay -> f:count()} == {languages -> f:count()}', then: 'success', else: 'info')}">
+    <td class="first">
+        <f:if condition="{page.row.languageOverlay -> f:count()} == {languages -> f:count()}">
             <f:else>
-                <f:if condition="{page.record.uid} == 0">
+                <f:if condition="{page.row.uid} == 0">
                     <f:else>
-                        <f:form.checkbox name="pagesToTranslate[]" value="{page.record.uid}" checked="true" id="pageToTranslate_{page.record.uid}" />
+                        <f:form.checkbox name="pagesToTranslate[]" value="{page.row.uid}" checked="true" id="pageToTranslate_{page.row.uid}" />
                     </f:else>
                 </f:if>
             </f:else>
         </f:if>
     </td>
     <td>
-        <label for="pageToTranslate_{page.record.uid}">
-            {page.spriteIconCode -> f:format.raw()}
-            <f:if condition="{page.record.is_siteroot} == 1">
+        <label for="pageToTranslate_{page.row.uid}">
+            {page.depthData -> f:format.raw()}
+            {page.HTML -> f:format.raw()}
+            <f:if condition="{page.row.is_siteroot} == 1">
                 <f:then>
-                    <b>{page.record.title}</b>
+                    <b>{page.row.title}</b>
                 </f:then>
                 <f:else>
-                    {page.record.title}
+                    {page.row.title}
                 </f:else>
             </f:if>
         </label>
     </td>
     <td>
         <div class="btn-group localizedState" role="group">
-            <f:for each="{page.record.languageOverlay}" as="languageOverlay">
+            <f:for each="{page.row.languageOverlay}" as="languageOverlay">
                 <button type="button" class="btn btn-default" title="{languageOverlay.title}" disabled="disabled">
                     <f:render partial="LanguageFlag" arguments="{languages: languages, languageUid: languageOverlay.sys_language_uid}"/>
                 </button>

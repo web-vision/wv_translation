@@ -14,7 +14,8 @@ namespace WebVision\WvTranslation\Domain\Repository;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Backend\Tree\Pagetree\PagetreeNode;
+use TYPO3\CMS\Backend\Tree\Pagetree;
+use TYPO3\CMS\Backend\Tree\View\PageTreeView;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Page\PageRepository;
@@ -48,17 +49,24 @@ class LocalizationRepository
      */
     public function findPageByUid($pageUid)
     {
-        if ($pageUid !== 0) {
-            $page = \TYPO3\CMS\Backend\Tree\Pagetree\Commands::getNode($pageUid);
-        }
-        else {
-            $pageRecord = [
+        $pageNode = GeneralUtility::makeInstance(Pagetree\PagetreeNode::class);
+        $page = [
+            'row' => [
                 'uid' => 0,
                 'title' => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
+            ],
+            'depthData' => '',
+            'HTML' => $pageNode->getSpriteIconCode(),
+        ];
+
+        if ($pageUid !== 0) {
+            $pageNode = Pagetree\Commands::getNode($pageUid);
+            $tree = GeneralUtility::makeInstance(PageTreeView::class);
+            $page = [
+                'row' => $tree->getRecord($pageUid),
+                'depthData' => '',
+                'HTML' => $pageNode->getSpriteIconCode(),
             ];
-            $page = GeneralUtility::makeInstance(PagetreeNode::class);
-            $page->setId($pageUid);
-            $page->setRecord($pageRecord);
         }
 
         $this->addLanguageOverlayToPage($page);
@@ -69,20 +77,20 @@ class LocalizationRepository
     /**
      * Will find all pages, that are sub pages of the provided page.
      *
-     * @param PagetreeNode $parentPage Parent node containing childs.
-     * @param int $nodeLimit Number of notes to fetch.
+     * @param array $parentPage Parent node containing childs.
+     * @param int $depth Number of levels to go down.
      *
-     * @return TYPO3\CMS\Backend\Tree\Pagetree\PagetreeNodeCollection
+     * @return array
      */
-    public function findPagesByParentPage(PagetreeNode $parentPage, $nodeLimit = 300)
+    public function findPagesByParentPage(array $parentPage, $depth = 5)
     {
-        $tree = GeneralUtility::makeInstance(
-            \TYPO3\CMS\Backend\Tree\Pagetree\DataProvider::class,
-            $nodeLimit
-        );
-        $pages = $tree->getNodes($parentPage);
-        foreach ($pages as $page) {
-            $this->addLanguageOverlayToPageAndSubpages($page);
+        $tree = GeneralUtility::makeInstance(PageTreeView::class);
+        $tree->init();
+        $tree->getTree($parentPage['row']['uid'], $depth);
+        $pages = $tree->tree;
+
+        foreach ($pages as &$page) {
+            $this->addLanguageOverlayToPage($page);
         }
 
         return $pages;
@@ -111,44 +119,28 @@ class LocalizationRepository
     }
 
     /**
-     * Will add the language overlay information to the given page and there
-     * subpages.
-     *
-     * @param PagetreeNode $page
-     *
-     * @return void
-     */
-    protected function addLanguageOverlayToPageAndSubpages(PagetreeNode $page)
-    {
-        $this->addLanguageOverlayToPage($page);
-        if ($page->getChildNodes()) {
-            foreach ($page->getChildNodes() as $subPage) {
-                $this->addLanguageOverlayToPageAndSubpages($subPage);
-            }
-        }
-    }
-
-    /**
      * Will add the language overlay information to the given page.
      *
      * The information will be available under record property and 'languageOverlay'.
      *
-     * @param PagetreeNode $page
+     * @param array $page
      *
      * @return void
      */
-    protected function addLanguageOverlayToPage(PagetreeNode $page)
+    protected function addLanguageOverlayToPage(array &$page)
     {
         $table = 'pages_language_overlay';
         $overlay = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
             '*',
             $table,
-            'pid = ' . (int) $page->getId() . ' ' . $this->getAdditionalWhereClause($table)
+            'pid = ' . (int) $page['row']['uid'] . ' ' . $this->getAdditionalWhereClause($table)
         );
 
-        $record = $page->getRecord();
-        $record['languageOverlay'] = $overlay;
-        $page->setRecord($record);
+        $overlay = array_filter($overlay, function (array $overlay) {
+            return $GLOBALS['BE_USER']->checkLanguageAccess($overlay['sys_language_uid']);
+        });
+
+        $page['row']['languageOverlay'] = $overlay;
     }
 
     /**
