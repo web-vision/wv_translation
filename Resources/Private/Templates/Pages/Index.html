@@ -1,3 +1,4 @@
+{namespace wvt=WebVision\WvTranslation\ViewHelpers}
 <f:layout name="Index" />
 <f:section name="Content">
     <f:render section="ModuleIntroduction" arguments="{_all}"/>
@@ -28,8 +29,7 @@
                 <span class="checkbox-group">
                     <f:form.checkbox name="languages[]" value="{language.uid}" value="{language.uid}" checked="1" id="language_{language.uid}" />
                     <label for="language_{language.uid}">
-                        <!-- TODO: Make file name uppercase to work on case sensitive file systems. -->
-                        <f:image src="{f:uri.resource(path: 'Icons/Flags/SVG/{language.flag}.svg', extensionName: 'core')}" height="15" width="15" />
+                        <f:image src="{f:uri.resource(path: 'Icons/Flags/SVG/{language.flag -> wvt:format.uppercase()}.svg', extensionName: 'core')}" height="15" width="15" />
                         {language.title}
                     </label>
                 </span>
