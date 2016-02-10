@@ -106,8 +106,6 @@ class PagesController extends ActionController
      */
     public function translatePagesAction(array $pagesToTranslate, array $languages)
     {
-        // TODO: Localize content. Make it optional? If so, keep in mind that
-        // we don't filter localized pages yet.
         $this->pagesLocalizationService->localizePages($pagesToTranslate, $languages);
 
         $this->redirect('index');
