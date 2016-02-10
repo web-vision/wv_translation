@@ -48,17 +48,18 @@ class LocalizationRepository
      */
     public function findPageByUid($pageUid)
     {
-        $pageRecord = [
-            'uid' => 0,
-            'title' => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
-        ];
-        if ($pageUid != 0) {
-            $pageRecord = $this->pageRepository->getPage((int) $pageUid);
+        if ($pageUid !== 0) {
+            $page = \TYPO3\CMS\Backend\Tree\Pagetree\Commands::getNode($pageUid);
         }
-
-        $page = GeneralUtility::makeInstance(PagetreeNode::class);
-        $page->setId($pageUid);
-        $page->setRecord($pageRecord);
+        else {
+            $pageRecord = [
+                'uid' => 0,
+                'title' => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
+            ];
+            $page = GeneralUtility::makeInstance(PagetreeNode::class);
+            $page->setId($pageUid);
+            $page->setRecord($pageRecord);
+        }
 
         $this->addLanguageOverlayToPage($page);
 
@@ -109,9 +110,6 @@ class LocalizationRepository
      */
     protected function addLanguageOverlayToPageAndSubpages(PagetreeNode $page)
     {
-        // TODO: Refactor to first gather all page ids, then fetch all
-        // information, and add all information?  We have to choose: One query,
-        // or one iteration?
         $this->addLanguageOverlayToPage($page);
         if ($page->getChildNodes()) {
             foreach ($page->getChildNodes() as $subPage) {
