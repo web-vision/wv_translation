@@ -69,12 +69,13 @@ class PagesController extends ActionController
     protected function initializeView(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view)
     {
         // Show path to current page in doc header.
-        $view->getModuleTemplate()->getDocHeaderComponent()->setMetaInformation(
-            $pageRecord = BackendUtility::readPageAccess(
-                $this->settings['currentPageUid'],
-                $GLOBALS['BE_USER']->getPagePermsClause(1)
-            )
+        $pageRecord = BackendUtility::readPageAccess(
+            $this->settings['currentPageUid'],
+            $GLOBALS['BE_USER']->getPagePermsClause(1)
         );
+        if ($pageRecord !== false) {
+            $view->getModuleTemplate()->getDocHeaderComponent()->setMetaInformation($pageRecord);
+        }
     }
 
     /**
