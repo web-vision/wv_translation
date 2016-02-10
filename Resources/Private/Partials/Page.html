@@ -1,8 +1,12 @@
-<tr class="{f:if(condition: '{page.record.languageOverlay -> f:count()} == {languages -> f:count()}', then: 'success')}">
+<tr class="{f:if(condition: '{page.record.languageOverlay -> f:count()} == {languages -> f:count()}', then: 'success', else: 'info')}">
     <td>
         <f:if condition="{page.record.languageOverlay -> f:count()} == {languages -> f:count()}">
             <f:else>
-                <f:form.checkbox value="{page.record.uid}" checked="true" />
+                <f:if condition="{page.record.uid} == 0">
+                    <f:else>
+                        <f:form.checkbox name="pagesToTranslate[]" value="{page.record.uid}" checked="true" />
+                    </f:else>
+                </f:if>
             </f:else>
         </f:if>
     </td>

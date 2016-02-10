@@ -21,7 +21,7 @@ call_user_func(
             'translation',
             '',
             array(
-                'Pages' => 'index',
+                'Pages' => 'index,translatePages',
             ),
             array(
                 'access' => 'user,group',

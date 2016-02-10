@@ -65,10 +65,43 @@ class PagesController extends ActionController
         $currentPage = $this->localizationRepository->findPageByUid($this->settings['currentPageUid']);
         $this->view->assignMultiple([
             'currentPage' => $currentPage,
+            // TODO: Check why subpages of 23 aren't shown, unless you select page 19 or a subpage.
             'pages' => $this->localizationRepository->findPagesByParentPage($currentPage),
             'languages' => $this->localizationRepository->findAllSystemLanguages(),
         ]);
     }
 
-    // TODO: Add method to localize pages
+    /**
+     * Translate the given pages.
+     *
+     * @param array $pagesToTranslate
+     *
+     * @return void
+     */
+    public function translatePagesAction(array $pagesToTranslate)
+    {
+        $dataToProcess = [
+            'pages' => [],
+        ];
+        $tce = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Core\DataHandling\DataHandler');
+
+        // TODO: Don't localize to an existing language, perhaps provide uids
+        //       via form submission, and add information as hidden fields?
+        // TODO: Localize content. Make it optional?
+
+        // Hide localized versions, as the title is auto generated and they
+        // need some more work.
+        $GLOBALS['TCA']['pages_language_overlay']['columns']['hidden']['config']['default'] = 1;
+        foreach($this->localizationRepository->findAllSystemLanguages() as $language) {
+            foreach ($pagesToTranslate as $pageUid) {
+                $dataToProcess['pages'][$pageUid] = [
+                    'localize' => $language['uid'],
+                ];
+            }
+            $tce->start([], $dataToProcess);
+            $tce->process_cmdmap();
+        }
+
+        $this->redirect('index');
+    }
 }

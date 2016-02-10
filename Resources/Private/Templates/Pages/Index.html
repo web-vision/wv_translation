@@ -4,6 +4,7 @@
     <p>{f:translate(key: 'description.index')}</p>
 
     <f:form action="translatePages">
+        <f:render section="Actions" arguments="{_all}"/>
         <table class="table table-hover table-striped">
             <thead>
                 <tr>
@@ -13,11 +14,18 @@
                 </tr>
             </thead>
             <tbody>
-                <f:render partial="Page" arguments="{page: settings.currentPage, languages: languages}"/>
+                <f:render partial="Page" arguments="{page: currentPage, languages: languages}"/>
                 <f:for each="{pages}" as="page">
                     <f:render partial="Page" arguments="{page: page, languages: languages}"/>
                 </f:for>
             </tbody>
         </table>
+        <f:render section="Actions" arguments="{_all}"/>
     </f:form>
+</f:section>
+
+<f:section name="Actions">
+    <p>
+        <f:form.submit value="{f:translate(key: 'actions.translate')}" />
+    </p>
 </f:section>

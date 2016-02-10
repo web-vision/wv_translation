@@ -29,6 +29,9 @@
             <trans-unit id="localized">
                 <source>Localized to languages</source>
             </trans-unit>
+            <trans-unit id="actions.translate">
+                <source>Translate selected pages</source>
+            </trans-unit>
          </body>
      </file>
 </xliff>
