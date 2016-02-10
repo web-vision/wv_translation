@@ -24,6 +24,13 @@ namespace WebVision\WvTranslation\Domain\Service;
 class PagesLocalizationService
 {
     /**
+     * Array key holding languages.
+     *
+     * @var string
+     */
+    const ARRAY_KEY_LANGUAGE = 'languages';
+
+    /**
      * Localize the given pages to the given languages.
      *
      * @param array $pageUids UIDs of pages to localize.
@@ -41,7 +48,7 @@ class PagesLocalizationService
         $GLOBALS['TCA']['pages_language_overlay']['columns']['hidden']['config']['default'] = 1;
 
         // Process each language, as TCE doesn't allow multiple at once.
-        foreach ($dataToProcess['languages'] as $dataForLanguage) {
+        foreach ($dataToProcess[static::ARRAY_KEY_LANGUAGE] as $dataForLanguage) {
             $tce->start([], $dataForLanguage);
             $tce->process_cmdmap();
         }
@@ -60,18 +67,18 @@ class PagesLocalizationService
         // As TCE doesn't allow localization to multiple languages at once, we
         // have to build an array for each language.
         $dataToProcess = [
-            'languages' => [],
+            static::ARRAY_KEY_LANGUAGE => [],
         ];
 
         foreach($pageUids as $pageUid) {
             foreach ($languageUids as $languageUid) {
-                if (!is_array($dataToProcess['languages'][$languageUid])) {
-                    $dataToProcess['languages'][$languageUid] = [
+                if (!is_array($dataToProcess[static::ARRAY_KEY_LANGUAGE][$languageUid])) {
+                    $dataToProcess[static::ARRAY_KEY_LANGUAGE][$languageUid] = [
                         'pages' => [],
                     ];
                 }
 
-                $dataToProcess['languages'][$languageUid]['pages'][$pageUid] = [
+                $dataToProcess[static::ARRAY_KEY_LANGUAGE][$languageUid]['pages'][$pageUid] = [
                     'localize' => $languageUid,
                 ];
             }

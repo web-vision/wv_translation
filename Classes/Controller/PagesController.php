@@ -27,6 +27,13 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 class PagesController extends ActionController
 {
     /**
+     * Array key containing the page uid of the current page.
+     *
+     * @var string
+     */
+    const ARRAY_KEY_CURRENT_PAGE = 'currentPageUid';
+
+    /**
      * Backend Template Container
      *
      * @var string
@@ -37,25 +44,27 @@ class PagesController extends ActionController
      * @inject
      * @var WebVision\WvTranslation\Domain\Repository\LocalizationRepository
      */
-    protected $localizationRepository;
+    protected $repository;
 
     /**
      * @inject
      * @var WebVision\WvTranslation\Domain\Service\PagesLocalizationService
      */
-    protected $pagesLocalizationService;
+    protected $pageService;
 
     /**
      * Initialize all actions.
      *
      * Fetch current page uid.
+     *
+     * @return void
      */
     protected function initializeAction()
     {
-        $this->settings['currentPageUid'] = 0;
+        $this->settings[static::ARRAY_KEY_CURRENT_PAGE] = 0;
         $currentPageUid = GeneralUtility::_GET('id');
         if ($currentPageUid !== null) {
-            $this->settings['currentPageUid'] = (int) $currentPageUid;
+            $this->settings[static::ARRAY_KEY_CURRENT_PAGE] = (int) $currentPageUid;
         }
     }
 
@@ -70,7 +79,7 @@ class PagesController extends ActionController
     {
         // Show path to current page in doc header.
         $pageRecord = BackendUtility::readPageAccess(
-            $this->settings['currentPageUid'],
+            $this->settings[static::ARRAY_KEY_CURRENT_PAGE],
             $GLOBALS['BE_USER']->getPagePermsClause(1)
         );
         if ($view->getModuleTemplate() && $pageRecord !== false) {
@@ -88,11 +97,11 @@ class PagesController extends ActionController
      */
     public function indexAction()
     {
-        $currentPage = $this->localizationRepository->findPageByUid($this->settings['currentPageUid']);
+        $currentPage = $this->repository->findPageByUid($this->settings['currentPageUid']);
         $this->view->assignMultiple([
             'currentPage' => $currentPage,
-            'pages' => $this->localizationRepository->findPagesByParentPage($currentPage),
-            'languages' => $this->localizationRepository->findAllSystemLanguages(),
+            'pages' => $this->repository->findPagesByParentPage($currentPage),
+            'languages' => $this->repository->findAllSystemLanguages(),
         ]);
     }
 
@@ -106,7 +115,7 @@ class PagesController extends ActionController
      */
     public function translatePagesAction(array $pagesToTranslate, array $languages)
     {
-        $this->pagesLocalizationService->localizePages($pagesToTranslate, $languages);
+        $this->pageService->localizePages($pagesToTranslate, $languages);
 
         $this->redirect('index');
     }

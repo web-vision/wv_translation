@@ -111,11 +111,9 @@ class LocalizationRepository
         );
 
         // Only use languages, where current user has access to.
-        $languages = array_filter($languages, function (array $language) {
+        return array_filter($languages, function (array $language) {
             return $GLOBALS['BE_USER']->checkLanguageAccess($language['uid']);
         });
-
-        return $languages;
     }
 
     /**

@@ -30,9 +30,10 @@ class UppercaseViewHelper extends AbstractViewHelper
     /**
      * Render method to process
      *
-     * @return void
+     * @return string
      */
-    public function render() {
+    public function render()
+    {
         return GeneralUtility::strtoupper(
             $this->renderChildren()
         );

@@ -7,7 +7,7 @@
  * @author Daniel Siepmann <d.siepmann@web-vision.de>
  */
 ;
-(function(window, document, $, undefined) {
+(function(window, document, $) {
     $(function() {
         $('input[type="checkbox"]').click(function() {
             var $this = $(this),
