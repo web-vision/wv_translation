@@ -96,12 +96,18 @@ class LocalizationRepository
     public function findAllSystemLanguages()
     {
         $table = 'sys_language';
-
-        return $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
+        $languages = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
             '*',
             $table,
             '1=1 ' . $this->getAdditionalWhereClause($table)
         );
+
+        // Only use languages, where current user has access to.
+        $languages = array_filter($languages, function (array $language) {
+            return $GLOBALS['BE_USER']->checkLanguageAccess($language['uid']);
+        });
+
+        return $languages;
     }
 
     /**

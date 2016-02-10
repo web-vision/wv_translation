@@ -92,7 +92,6 @@ class PagesController extends ActionController
         $this->view->assignMultiple([
             'currentPage' => $currentPage,
             'pages' => $this->localizationRepository->findPagesByParentPage($currentPage),
-            // TODO: Check user access to languages, so you aren't able to exploit restrictions.
             'languages' => $this->localizationRepository->findAllSystemLanguages(),
         ]);
     }
