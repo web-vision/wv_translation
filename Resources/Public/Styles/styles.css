@@ -1,0 +1,11 @@
+label { font-weight: inherit; }
+
+table label { width: 100%; }
+
+.localized-state .btn[disabled] { cursor: help; }
+
+th.first { width: 50px; }
+
+td.first { text-align: center; }
+
+.checkbox-group { margin-right: 10px; }

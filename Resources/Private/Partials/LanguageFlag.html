@@ -1,0 +1,6 @@
+{namespace wvt=WebVision\WvTranslation\ViewHelpers}
+<f:for each="{languages}" as="language">
+    <f:if condition="{language.uid} == {languageUid}">
+        <f:image src="{f:uri.resource(path: 'Icons/Flags/SVG/{language.flag -> wvt:format.uppercase()}.svg', extensionName: 'core')}" height="15" width="15" />
+    </f:if>
+</f:for>

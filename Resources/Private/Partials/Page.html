@@ -1,0 +1,41 @@
+<tr class="{f:if(condition: '{page.row.languageOverlay -> f:count()} == {languages -> f:count()}', then: 'success', else: 'info')}">
+    <td class="first">
+        <f:if condition="{page.row.languageOverlay -> f:count()} == {languages -> f:count()}">
+            <f:else>
+                <f:if condition="{page.row.uid} == 0">
+                    <f:else>
+                        <f:form.checkbox name="pagesToTranslate[]" value="{page.row.uid}" checked="true" id="pageToTranslate_{page.row.uid}" />
+                    </f:else>
+                </f:if>
+            </f:else>
+        </f:if>
+    </td>
+    <td>
+        <label for="pageToTranslate_{page.row.uid}">
+            {page.depthData -> f:format.raw()}
+            {page.HTML -> f:format.raw()}
+            <f:if condition="{page.row.is_siteroot} == 1">
+                <f:then>
+                    <strong>{page.row.title}</strong>
+                </f:then>
+                <f:else>
+                    {page.row.title}
+                </f:else>
+            </f:if>
+        </label>
+    </td>
+    <td>
+        <div class="btn-group localized-state" role="group">
+            <f:for each="{page.row.languageOverlay}" as="languageOverlay">
+                <button type="button" class="btn btn-default" title="{languageOverlay.title}" disabled="disabled">
+                    <f:render partial="LanguageFlag" arguments="{languages: languages, languageUid: languageOverlay.sys_language_uid}"/>
+                </button>
+            </f:for>
+        </div>
+    </td>
+</tr>
+<f:if condition="{page.childNodes}">
+    <f:for each="{page.childNodes}" as="subPage">
+        <f:render partial="Page" arguments="{page: subPage, languages: languages}"/>
+    </f:for>
+</f:if>

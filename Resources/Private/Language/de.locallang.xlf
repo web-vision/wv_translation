@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+     <file source-language="en" datatype="plaintext" original="messages" date="2016-02-09T12:24:23Z" product-name="wv_translation">
+         <header/>
+         <body>
+            <trans-unit id="mlang_labels_tablabel">
+                <source>Easier translation of records</source>
+                <target>Vereinfachte Übersetzung von Datensätzen</target>
+            </trans-unit>
+            <trans-unit id="mlang_labels_tabdescr">
+                <source>Currently only pages can be translated, recursively to multiple languages.</source>
+                <target>Aktuell werden nur Seiten unterstützt, diese jedoch rekursiv und mit mehreren Sprachen auf einmal.</target>
+            </trans-unit>
+            <trans-unit id="mlang_tabs_tab">
+                <source>Translation</source>
+                <target>Übersetzung</target>
+            </trans-unit>
+
+            <trans-unit id="headline.index">
+                <source>Translation of pages - Index</source>
+                <target>Übersetzung von Seiten - Übersicht</target>
+            </trans-unit>
+            <trans-unit id="headline.index.description">
+                <source>Information about module</source>
+                <target>Informationen zum Modul</target>
+            </trans-unit>
+            <trans-unit id="description.index">
+                <source><![CDATA[
+                    <p>This module delivers an overview of all pages and their current translation state. You are able to translate pages recursively to all languages.</p>
+                    <p>
+                        Pages that are already translated to all possible languages are highlighted in green and won't be able to be translated again.<br>
+                        Pages that currently will be translated are highlighted in blue.
+                    </p>
+                    <p class="bg-warning">
+                        <b>NOTE:</b> Only a level of 5 will be fetched, to prevent loading errors.<br>
+                        You have to select a deeper level on your own to see current state and translate further pages.
+                    </p>
+                ]]></source>
+                <target><![CDATA[
+                    <p>Dieses Modul liefert eine Übersicht aller Seiten und deren aktueller Zustand der Übersetzungen. Seiten können rekursiv in alle Sprachen übersetzt werden.</p>
+                    <p>
+                        Seiten, welche bereits in alle verfügbaren Sprachen übersetzt sind, werden Grün hervorgehoben und können nicht erneut übersetzt werden.<br>
+                        Seiten welche aktuell zur Übersetzung ausgewählt sind werden Blau hervorgehoben.
+                    </p>
+                    <p class="bg-warning">
+                        <b>ACHTUNG:</b> Es werden nur 5 Ebenen dargestellt, um Probleme mit der Performance zu vermeiden.<br>
+                        Sollten Seiten auf einer tieferen Ebene übersetzt werden müssen, kann einfach eine der tieferen Ebenen ausgwählt werden.
+                    </p>
+                ]]></target>
+            </trans-unit>
+            <trans-unit id="headline.index.languageSelection">
+                <source>Languages for translation of selected pages</source>
+                <target>Sprachen in welche die Seiten übersetzt werden sollen</target>
+            </trans-unit>
+            <trans-unit id="description.index.languageSelection">
+                <source><![CDATA[<p>Selected pages will only be translated to selected languages. If you don't need a specific languages, just deselect it.</p>]]></source>
+                <target><![CDATA[<p>Ausgewählte Seiten werden nur in die ausgewählten Sprachen übersetzt. Wenn die Übersetzung in eine Sprache nicht benötigt wird, muss diese nur abgewählt werden.</p>]]></target>
+            </trans-unit>
+
+            <trans-unit id="page.title">
+                <source>Page title</source>
+                <title>Seitentitel</title>
+            </trans-unit>
+            <trans-unit id="selected">
+                <source>Translate</source>
+                <target>Übersetzen</target>
+            </trans-unit>
+            <trans-unit id="localized">
+                <source>Localized to languages</source>
+                <target>Übersetzt in folgende Sprachen</target>
+            </trans-unit>
+            <trans-unit id="actions.translate">
+                <source>Translate selected pages</source>
+                <target>Ausgewählte Seiten übersetzen</target>
+            </trans-unit>
+         </body>
+     </file>
+</xliff>
