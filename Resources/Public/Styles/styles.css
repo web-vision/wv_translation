@@ -1,4 +1,19 @@
 /* line 1, styles.scss */
+label {
+  font-weight: inherit;
+}
+
+/* line 3, styles.scss */
+.localizedState button.btn[disabled] {
+  cursor: help;
+}
+
+/* line 5, styles.scss */
 th.first {
   width: 50px;
+}
+
+/* line 7, styles.scss */
+span.checkbox-group {
+  margin-right: 10px;
 }

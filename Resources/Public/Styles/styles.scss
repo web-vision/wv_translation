@@ -1,3 +1,7 @@
-th.first {
-    width: 50px;
-}
+label { font-weight: inherit; }
+
+.localizedState button.btn[disabled] { cursor: help; }
+
+th.first { width: 50px; }
+
+span.checkbox-group { margin-right: 10px; }

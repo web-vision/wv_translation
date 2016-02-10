@@ -4,17 +4,27 @@
             <f:else>
                 <f:if condition="{page.record.uid} == 0">
                     <f:else>
-                        <f:form.checkbox name="pagesToTranslate[]" value="{page.record.uid}" checked="true" />
+                        <f:form.checkbox name="pagesToTranslate[]" value="{page.record.uid}" checked="true" id="pageToTranslate_{page.record.uid}" />
                     </f:else>
                 </f:if>
             </f:else>
         </f:if>
     </td>
     <td>
-        {page.record.title}
+        <label for="pageToTranslate_{page.record.uid}">
+            {page.spriteIconCode -> f:format.raw()}
+            <f:if condition="{page.record.is_siteroot} == 1">
+                <f:then>
+                    <b>{page.record.title}</b>
+                </f:then>
+                <f:else>
+                    {page.record.title}
+                </f:else>
+            </f:if>
+        </label>
     </td>
     <td>
-        <div class="btn-group" role="group">
+        <div class="btn-group localizedState" role="group">
             <f:for each="{page.record.languageOverlay}" as="languageOverlay">
                 <button type="button" class="btn btn-default" title="{languageOverlay.title}" disabled="disabled">
                     <f:render partial="LanguageFlag" arguments="{languages: languages, languageUid: languageOverlay.sys_language_uid}"/>

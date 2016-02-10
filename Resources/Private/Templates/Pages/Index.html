@@ -1,27 +1,59 @@
 <f:layout name="Index" />
 <f:section name="Content">
-    <h1>{f:translate(key: 'headline.index')}</h1>
-    <p>{f:translate(key: 'description.index')}</p>
-
+    <f:render section="ModuleIntroduction" arguments="{_all}"/>
     <f:form action="translatePages">
+        <f:form.hidden name="pagesToTranslate[]" value="" />
+
+        <f:render section="LanguageSelection" arguments="{_all}"/>
         <f:render section="Actions" arguments="{_all}"/>
-        <table class="table table-hover table-striped">
-            <thead>
-                <tr>
-                    <th class="first">{f:translate(key: 'selected')}</th>
-                    <th>{f:translate(key: 'page.title')}</th>
-                    <th>{f:translate(key: 'localized')}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <f:render partial="Page" arguments="{page: currentPage, languages: languages}"/>
-                <f:for each="{pages}" as="page">
-                    <f:render partial="Page" arguments="{page: page, languages: languages}"/>
-                </f:for>
-            </tbody>
-        </table>
+        <f:render section="RecordListing" arguments="{_all}"/>
         <f:render section="Actions" arguments="{_all}"/>
     </f:form>
+</f:section>
+
+<f:section name="ModuleIntroduction">
+    <h1>{f:translate(key: 'headline.index')}</h1>
+    <div class="panel panel-default">
+        <div class="panel-heading">{f:translate(key: 'headline.index.description')}</div>
+        <div class="panel-body">{f:translate(key: 'description.index')}</div>
+    </div>
+</f:section>
+
+<f:section name="LanguageSelection">
+    <div class="panel panel-default">
+        <div class="panel-heading">{f:translate(key: 'headline.index.languageSelection')}</div>
+        <div class="panel-body">
+            {f:translate(key: 'description.index.languageSelection')}
+            <f:for each="{languages}" as="language">
+                <span class="checkbox-group">
+                    <f:form.checkbox name="languages[]" value="{language.uid}" value="{language.uid}" checked="1" id="language_{language.uid}" />
+                    <label for="language_{language.uid}">
+                        <!-- TODO: Make file name uppercase to work on case sensitive file systems. -->
+                        <f:image src="{f:uri.resource(path: 'Icons/Flags/SVG/{language.flag}.svg', extensionName: 'core')}" height="15" width="15" />
+                        {language.title}
+                    </label>
+                </span>
+            </f:for>
+        </div>
+    </div>
+</f:section>
+
+<f:section name="RecordListing">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th class="first">{f:translate(key: 'selected')}</th>
+                <th>{f:translate(key: 'page.title')}</th>
+                <th>{f:translate(key: 'localized')}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <f:render partial="Page" arguments="{page: currentPage, languages: languages}"/>
+            <f:for each="{pages}" as="page">
+                <f:render partial="Page" arguments="{page: page, languages: languages}"/>
+            </f:for>
+        </tbody>
+    </table>
 </f:section>
 
 <f:section name="Actions">
