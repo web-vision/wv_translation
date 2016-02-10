@@ -73,7 +73,7 @@ class PagesController extends ActionController
             $this->settings['currentPageUid'],
             $GLOBALS['BE_USER']->getPagePermsClause(1)
         );
-        if ($pageRecord !== false) {
+        if ($view->getModuleTemplate() && $pageRecord !== false) {
             $view->getModuleTemplate()->getDocHeaderComponent()->setMetaInformation($pageRecord);
         }
     }
